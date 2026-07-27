@@ -108,9 +108,9 @@ function playRound(playerChoice) {
     setTimeout(() => {
       resultEl.textContent = phrase;
       if (i === phrases.length - 1) {
-        setTimeout(() => revealChoices(playerChoice, aiChoice, getWinner(playerChoice, aiChoice)), 300);
+        revealChoices(playerChoice, aiChoice, getWinner(playerChoice, aiChoice));
       }
-    }, i * 400);
+    }, i * 1000);
   });
 }
 
