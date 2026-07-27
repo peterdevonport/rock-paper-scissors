@@ -134,8 +134,4 @@ function resetScores() {
   document.getElementById('ai-choice-box').classList.remove('bouncing');
 }
 
-document.querySelectorAll('.choice-btn').forEach(btn => {
-  btn.addEventListener('click', () => playRound(btn.dataset.choice));
-});
 
-document.getElementById('reset-btn').addEventListener('click', resetScores);
