@@ -198,10 +198,6 @@ h1 {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-20px); }
 }
-
-.bouncing {
-  animation: bounce 0.3s ease-in-out infinite;
-}
   </style>
 </head>
 <body>
@@ -294,6 +290,15 @@ function updateScores() {
   document.getElementById('tie-score').textContent = state.ties;
 }
 
+function triggerBounce() {
+  const boxes = [document.getElementById('player-choice-box'), document.getElementById('ai-choice-box')];
+  boxes.forEach(box => {
+    box.classList.remove('bounce-once');
+    void box.offsetHeight;
+    box.classList.add('bounce-once');
+  });
+}
+
 function revealChoices(playerChoice, aiChoice, result) {
   const playerIcon = document.getElementById('player-choice-icon');
   const aiIcon = document.getElementById('ai-choice-icon');
@@ -301,8 +306,8 @@ function revealChoices(playerChoice, aiChoice, result) {
   const playerBox = document.getElementById('player-choice-box');
   const aiBox = document.getElementById('ai-choice-box');
 
-  playerBox.classList.remove('bouncing');
-  aiBox.classList.remove('bouncing');
+  playerBox.classList.remove('bounce-once');
+  aiBox.classList.remove('bounce-once');
 
   playerIcon.textContent = choiceIcons[playerChoice];
   aiIcon.textContent = choiceIcons[aiChoice];
@@ -357,15 +362,14 @@ function playRound(playerChoice) {
   resultEl.className = 'result';
   resultEl.textContent = '';
 
-  playerBox.classList.add('bouncing');
-  aiBox.classList.add('bouncing');
-
   const phrases = ['Rock!', 'Paper!', 'Scissors!', 'Shoot!'];
 
   phrases.forEach((phrase, i) => {
     setTimeout(() => {
       resultEl.textContent = phrase;
-      if (i === phrases.length - 1) {
+      if (i < phrases.length - 1) {
+        triggerBounce();
+      } else {
         revealChoices(playerChoice, aiChoice, getWinner(playerChoice, aiChoice));
       }
     }, i * 1000);
@@ -388,8 +392,8 @@ function resetScores() {
   document.getElementById('result').className = 'result';
   document.getElementById('player-choice-box').style.borderColor = 'transparent';
   document.getElementById('ai-choice-box').style.borderColor = 'transparent';
-  document.getElementById('player-choice-box').classList.remove('bouncing');
-  document.getElementById('ai-choice-box').classList.remove('bouncing');
+  document.getElementById('player-choice-box').classList.remove('bounce-once');
+  document.getElementById('ai-choice-box').classList.remove('bounce-once');
 }
   </script>
 </body>
