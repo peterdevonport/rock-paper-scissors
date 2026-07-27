@@ -114,6 +114,8 @@ function playRound(playerChoice) {
   });
 }
 
+document.getElementById('result').textContent = 'Choose your move!';
+
 function resetScores() {
   if (isPlaying) return;
   state.playerScore = 0;
